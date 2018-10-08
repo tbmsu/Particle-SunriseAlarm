@@ -23,10 +23,6 @@ int blueList[] = {  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 // define sunrise duration
 int duration = 6000;
 
-// define Fibonacci for brightness
-int fibList[] = { 1,1,2,3,5,8,13,21,34,55 };
-
-
 void color(uint8_t r, uint8_t g, uint8_t b, uint8_t brightness, int leds) {
     uint16_t pixel;
 
@@ -56,11 +52,6 @@ void sunrise() {
     	b = blueList[x];
     	Alarm.delay(duration);
     	color(r, g, b, brightness, PIXEL_COUNT - PIXEL_COUNT_DEFECT);
-
-        // if (fibIndex < 10 && x % modInc == 0) {
-        //     brightness += fibList[fibIndex];
-        //     fibIndex++;
-        // }
         
         if (brightness < 220) {
             brightness++;
