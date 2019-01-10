@@ -13,7 +13,7 @@ unsigned long lastSync = millis();
 // create WS2812B LED driver
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
 
-// alarm enabled status
+// alarm status
 bool isAlarmEnabled = true;
 bool isDstOn = false;
 
@@ -24,8 +24,8 @@ timeDayOfWeek_t weekdayDays[] = { dowMonday, dowTuesday, dowWednesday, dowThursd
 timeDayOfWeek_t weekendDays[] = { dowSaturday, dowSunday };
 
 // alarm variables
-unsigned long lastAlarmStarted = -1;
 unsigned int offMin = 60;
+unsigned long lastAlarmStarted = -1;
 String weekdayStatus = "<n/a>";
 String weekendStatus = "<n/a>";
 
@@ -38,7 +38,8 @@ unsigned int blueList[] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 unsigned int colorValues = 210;
 
 // define sunrise duration (times #colorValues)
-unsigned int duration = 1000; //9000;
+unsigned int duration = 8600;
+
 
 void color(uint8_t r, uint8_t g, uint8_t b, int leds) {
     uint16_t pixel;
@@ -59,7 +60,7 @@ void pixelsOff() {
 // Sunrise function. Walks through the arrays.
 void sunrise() {
     unsigned int x, r, g, b;
-    
+
     pixelsOff();
 
     for (x = 10; x < colorValues; x++) {
@@ -67,6 +68,7 @@ void sunrise() {
     	g = greenList[x];
     	b = blueList[x];
     	color(r, g, b, strip.numPixels());
+
         Alarm.delay(duration);
     };
 }
