@@ -166,6 +166,20 @@ int cloudHandleWeekdayParams(String command) {
     String hour = command.substring(5, 7);
     String min  = command.substring(7);
     
+    int i_hour, i_min;
+    
+    if ('0' == hour.charAt(0)) { 
+        i_hour = hour.substring(1).toInt();
+    } else {
+        i_hour = hour.toInt();
+    }
+    
+    if ('0' == min.charAt(0)) { 
+        i_min = min.substring(1).toInt();
+    } else {
+        i_min = min.toInt();
+    }
+    
     // free alarms
     for (unsigned int d = 0; d < sizeof(weekdayAlarmId); d++) {
         int alarmId = weekdayAlarmId[d];
@@ -178,7 +192,7 @@ int cloudHandleWeekdayParams(String command) {
     for (unsigned int d = 0; d < sizeof(days); d++) {
         if (days.charAt(d) == '1') {
             // set alarm ans store alarm ID
-            weekdayAlarmId[d] = Alarm.alarmRepeat(weekdayDays[d], hour.toInt(), min.toInt(), 0, MorningAlarm);
+            weekdayAlarmId[d] = Alarm.alarmRepeat(weekdayDays[d], i_hour, i_min, 0, MorningAlarm);
         } else {
             // set invalid alarm ID for day
             weekdayAlarmId[d] = dtINVALID_ALARM_ID;
@@ -201,6 +215,20 @@ int cloudHandleWeekendParams(String command) {
     String hour = command.substring(2, 4);
     String min  = command.substring(4);
     
+    int i_hour, i_min;
+    
+    if ('0' == hour.charAt(0)) { 
+        i_hour = hour.substring(1).toInt();
+    } else {
+        i_hour = hour.toInt();
+    }
+    
+    if ('0' == min.charAt(0)) { 
+        i_min = min.substring(1).toInt();
+    } else {
+        i_min = min.toInt();
+    }
+    
     // free alarms
     for (unsigned int d = 0; d < sizeof(weekendAlarmId); d++) {
         int alarmId = weekendAlarmId[d];
@@ -213,7 +241,7 @@ int cloudHandleWeekendParams(String command) {
     for (unsigned int d = 0; d < sizeof(days); d++) {
         if (days.charAt(d) == '1') {
             // set alarm ans store alarm ID
-            weekendAlarmId[d] = Alarm.alarmRepeat(weekendDays[d], hour.toInt(), min.toInt(), 0, MorningAlarm);
+            weekendAlarmId[d] = Alarm.alarmRepeat(weekendDays[d], i_hour, i_min, 0, MorningAlarm);
         } else {
             // set invalid alarm ID for day
             weekendAlarmId[d] = dtINVALID_ALARM_ID;
