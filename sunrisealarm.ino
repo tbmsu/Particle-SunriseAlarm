@@ -26,8 +26,8 @@ timeDayOfWeek_t weekendDays[] = { dowSaturday, dowSunday };
 // alarm variables
 unsigned int offMin = 60;
 unsigned long lastAlarmStarted = -1;
-String weekdayStatus = "";
-String weekendStatus = "";
+String weekdayStatus = "{}";
+String weekendStatus = "{}";
 String globalStatus = "{}";
 
 // define sunrise color gradient
@@ -200,7 +200,7 @@ int cloudHandleWeekdayParams(String command) {
     }
     
     // set status
-    weekdayStatus = days + "," + hour + ":" + min + "+" + offMin;
+    weekdayStatus = createStatusJSON(days, hour, min);
     
     updateGlobalStatus();
     
@@ -249,23 +249,37 @@ int cloudHandleWeekendParams(String command) {
     }
     
     // set status
-    weekendStatus = days + "," + hour + ":" + min + "+" + offMin;
+    weekendStatus = createStatusJSON(days, hour, min);
     
     updateGlobalStatus();
     
     return 1;
 }
 
+String createStatusJSON(String days, String hour, String min) {
+    String status = "{";
+    status.concat("\"d\":\"");
+    status.concat(days);
+    status.concat("\",\"t\":\"");
+    status.concat(hour);
+    status.concat(":");
+    status.concat(min);
+    status.concat("\"}");
+    
+    return status;
+}
+
 void updateGlobalStatus() {
-    globalStatus = "";
-    globalStatus.concat("{");
+    globalStatus = "{";
     globalStatus.concat("\"gs\":");
     globalStatus.concat(isAlarmEnabled);
     globalStatus.concat(",\"dst\":");
     globalStatus.concat(isDstOn);
-    globalStatus.concat(",\"wds\":\"");
+    globalStatus.concat(",\"off\":");
+    globalStatus.concat(offMin);
+    globalStatus.concat(",\"wds\":");
     globalStatus.concat(weekdayStatus);
-    globalStatus.concat("\",\"wes\":\"");
+    globalStatus.concat(",\"wes\":");
     globalStatus.concat(weekendStatus);
-    globalStatus.concat("\"}");
+    globalStatus.concat("}");
 }
