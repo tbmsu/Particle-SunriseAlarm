@@ -1,6 +1,8 @@
+#include "TimeLib.h"
+#include "TimeAlarms.h"
+
 // This #include statement was automatically added by the Particle IDE.
 #include <neopixel.h>
-#include <TimeAlarms.h>
 
 #define PIXEL_PIN D2
 #define PIXEL_TYPE WS2812B
@@ -40,6 +42,9 @@ unsigned int colorValues = 210;
 
 // define sunrise duration (times #colorValues)
 unsigned int duration = 8600;
+
+// calculated sunrise duration in milliseconds
+unsigned int sunriseDurationMs = colorValues * duration;
 
 
 void color(uint8_t r, uint8_t g, uint8_t b, int leds) {
@@ -275,6 +280,8 @@ void updateGlobalStatus() {
     globalStatus.concat(isAlarmEnabled);
     globalStatus.concat(",\"dst\":");
     globalStatus.concat(isDstOn);
+    globalStatus.concat(",\"srd\":");
+    globalStatus.concat(sunriseDurationMs);
     globalStatus.concat(",\"off\":");
     globalStatus.concat(offMin);
     globalStatus.concat(",\"wds\":");
