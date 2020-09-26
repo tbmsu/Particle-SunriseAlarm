@@ -21,7 +21,7 @@ bool isAlarmEnabled = true;
 bool isDstOn = false;
 
 // alarm variables
-static int offMin = 45;
+static int offMin = 50;
 static long lastAlarmStarted = -1;
 
 // define sunrise color gradient
@@ -74,11 +74,15 @@ void syncCloudTime() {
     }
 }
 
+bool isWeekday() {
+    int weekday = Time.weekday();
+    return weekday != 1 && weekday != 7;
+}
+
 void checkAlarmOnTrigger() {
     int currentHour = Time.hour();
     int currentMinute = Time.minute();
-    int weekday = Time.weekday();
-    if(isAlarmEnabled && weekday != 1 && weekday != 7 && lastAlarmStarted < 0 && currentHour == alarmHour && currentMinute == alarmMinute)
+    if(isAlarmEnabled && isWeekday() && lastAlarmStarted < 0 && currentHour == alarmHour && currentMinute == alarmMinute)
     {
         morningAlarmOn();
     }
