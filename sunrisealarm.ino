@@ -146,8 +146,7 @@ int cloudSetAlarm(String cmd) {
     alarmHour = s_h.toInt();
     alarmMinute = s_m.toInt();
     
-    Particle.publish("alarm_hour", String(alarmHour), PRIVATE);
-    Particle.publish("alarm_minute", String(alarmMinute), PRIVATE);
+    Particle.publish("alarm_time", String(alarmHour) + ":" + String(alarmMinute), PRIVATE);
     
     return 0;
 }
